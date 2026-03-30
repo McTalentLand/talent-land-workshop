@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Talent Land</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Talent Land</h1>
+    <h2>Código que Obedece: Desarrollo escalable con IA</h2>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <h2>Health</h2>
+      <button id="btnHealth">GET /health</button>
+      <pre id="outHealth"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Menu</h2>
+      <button id="btnMenu">GET /menu</button>
+      <div id="outMenu" class="menu"></div>
+    </section>
+
+    <section class="card">
+      <h2>Create order</h2>
+      <form id="frmOrder">
+        <label>Customer <input id="customer" required placeholder="Ronald"/></label>
+        <label>Item
+          <select id="item">
+            <option value="bigmac">Big Mac</option>
+            <option value="fries">Fries</option>
+            <option value="mcflurry">McFlurry</option>
+          </select>
+        </label>
+        <label>Qty <input id="qty" type="number" min="1" value="1"/></label>
+        <button type="submit">POST /orders</button>
+      </form>
+      <pre id="outCreate"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Get order</h2>
+      <div class="row">
+        <input id="orderId" placeholder="order id"/>
+        <button id="btnGet">GET /orders/:id</button>
+      </div>
+      <pre id="outOrder"></pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

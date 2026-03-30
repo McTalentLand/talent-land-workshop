@@ -3,9 +3,6 @@
 
 > **Sinopsis:** A través del uso de "instruction files", aprenderás a guiar a la IA para generar código profesional, escalable y alineado a estándares empresariales.
 
-**Duración:** ~25 minutos + demo  
-**Audiencia:** Estudiantes de ingeniería de software
-
 ---
 
 ## McDonald's Global Technology
