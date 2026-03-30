@@ -154,6 +154,8 @@ Lineamientos:
 - Evita consejos genéricos ("escribe tests", "maneja errores") - enfócate en 
   los enfoques ESPECÍFICOS de este proyecto
 - Documenta solo patrones descubribles, no prácticas aspiracionales
+- No generes pruebas unitarias a menos que lo solicite
+- Si generas nuevo codigo html asegurate que siga los lineamientos existentes en el proyecto
 
 Actualiza `.github/copilot-instructions.md` y luego pide retroalimentación.
 ```
