@@ -155,6 +155,7 @@ TalentLandWorkshop/
 ### El servidor no inicia
 - Verifica que el puerto 3000 no está ocupado por otra aplicación
 - Intenta: `npm run dev -- --port 3001`
+- Puedes ejecutar en terminal `Stop-Process -Name "node" -Force`
 
 ---
 
