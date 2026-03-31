@@ -49,3 +49,49 @@ $('btnGet').addEventListener('click', async () => {
     $('outOrder').textContent = pretty(e);
   }
 });
+
+$('btnListOrders').addEventListener('click', async () => {
+  $('outOrders').textContent = 'Loading...';
+  try {
+    const orders = await api('/orders');
+    if (!Array.isArray(orders) || orders.length === 0) {
+      $('outOrders').textContent = 'No orders available.';
+      return;
+    }
+    $('outOrders').innerHTML = renderOrdersTable(orders);
+  } catch (e) {
+    $('outOrders').textContent = pretty(e);
+  }
+});
+
+function renderOrdersTable(orders) {
+  return `
+    <div class="table-container">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Created</th>
+            <th>Total</th>
+            <th>Items</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orders.map(order => {
+            const items = order.lines.map(line => `${line.quantity}× ${line.name}`).join(', ');
+            return `
+              <tr>
+                <td>${order.id}</td>
+                <td>${order.customerName}</td>
+                <td>${order.createdAtIso}</td>
+                <td>$${order.total.toFixed(2)}</td>
+                <td>${items}</td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}

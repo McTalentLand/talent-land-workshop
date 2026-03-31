@@ -3,6 +3,7 @@ import { Order, OrderId } from '../orderTypes';
 export interface OrderRepository {
   save(order: Order): void;
   getById(id: OrderId): Order | undefined;
+  getAll(): Order[];
 }
 
 export class InMemoryOrderRepository implements OrderRepository {
@@ -14,5 +15,9 @@ export class InMemoryOrderRepository implements OrderRepository {
 
   getById(id: OrderId): Order | undefined {
     return this.byId.get(id);
+  }
+
+  getAll(): Order[] {
+    return Array.from(this.byId.values());
   }
 }

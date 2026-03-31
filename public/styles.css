@@ -50,6 +50,41 @@ header {
     border-radius: 14px;
 }
 
+.card-wide {
+    grid-column: span 2;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 12px 10px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.orders-table thead {
+    background: #ffba00;
+    color: #000;
+}
+
+.orders-table tbody tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.orders-table tbody tr:hover {
+    background: #eaeaea;
+}
+
 button {
     padding: 10px 12px;
     font-weight: 650;

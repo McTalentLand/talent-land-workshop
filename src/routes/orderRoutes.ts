@@ -9,6 +9,11 @@ export function createOrderRoutes(orderService: OrderService) {
     res.status(result.status).json(result.body);
   });
 
+  router.get('/orders', (_req, res) => {
+    const result = orderService.getAll();
+    res.status(result.status).json(result.body);
+  });
+
   router.get('/orders/:id', (req, res) => {
     const result = orderService.getById(req.params.id);
     res.status(result.status).json(result.body);

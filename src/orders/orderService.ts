@@ -52,6 +52,11 @@ export class OrderService {
     return { status: 200, body: order };
   }
 
+  getAll() {
+    const orders = this.orderRepo.getAll();
+    return { status: 200, body: orders };
+  }
+
   private parseCreateRequest(payload: unknown): { ok: true; value: CreateOrderRequest } | { ok: false; error: any } {
     if (!payload || typeof payload !== 'object') {
       return { ok: false, error: toError(400, 'VALIDATION_ERROR', 'Payload must be an object') };
@@ -71,7 +76,7 @@ export class OrderService {
       return { itemId, quantity };
     });
 
-    const badLine = lines.find(l => !l.itemId || !Number.isInteger(l.quantity) || l.quantity <= 0);
+    const badLine = lines.find((l: any) => !l.itemId || !Number.isInteger(l.quantity) || l.quantity <= 0);
     if (badLine) {
       return { ok: false, error: toError(400, 'VALIDATION_ERROR', 'Each line must have valid itemId and quantity > 0') };
     }
