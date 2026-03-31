@@ -281,60 +281,66 @@ description: "Estándares de testing"
 
 ### Demo 1: Generación de código
 
-**Contexto:** El `MenuService` actual solo tiene `getMenu()` y `getItem()`. Queremos agregar filtrado por categoría.
+**Contexto:** La clase `OrderService` solo tiene un metodo `getById()` para obtener ordener en especifico. Queremos agregar un nuevo servicio para obtener todas las ordenes y que se muestre en la interfaz.
 
 **Prompt para Copilot (modo Agent):**
 
 ```
-Agrega un método `getItemsByCategory(category: string)` al MenuService 
-que retorne solo los items de esa categoría.
+Necesito que crees un nuevo servicio dentro de #file:orders  para obtener un listado de todas las ordenes que se encuentran almacenadas, luego crea dentro del archivo #file:index.html una nueva section donde al dar clic en un boton obtenga el resultado de este nuevo servicio y genere una tabla con los atributos de las ordenes, contempla que debes seguir el mismo estilo que tienen los otros elementos en la pagina de #file:index.html, el espacio que ocupe el card sea del doble del espacio de los cards actuales y la table tenga un estilo donde se permita diferenciar el header y cada uno de los renglones.
 ```
 
 **Sin instrucciones**, Copilot podría generar:
 ```typescript
 // ❌ Función suelta, no sigue el patrón de clases
-function getItemsByCategory(menu: MenuItem[], category: string) {
-  return menu.filter(item => item.category === category);
+function getAll() {
+  return orders;
 }
 ```
 
 **Con instrucciones**, Copilot genera:
 ```typescript
 // ✅ Método de clase, usa el repositorio inyectado
-export class MenuService {
-  constructor(private readonly repo: MenuRepository) {}
+export class OrderService {
+  constructor(private readonly orderRepo: OrderRepository,) {}
 
-  getItemsByCategory(category: string): MenuItem[] {
-    return this.repo.getAll().filter(item => item.category === category);
+  getAll(): Order[] {
+    const orders = this.orderRepo.getAll();
+    return { status: 200, body: orders };
   }
 }
 ```
 
-> **Punto clave:** Las instrucciones le dicen a Copilot que usamos *clases* y *repositorios*.
+> **Punto clave:** Las instrucciones le dicen a Copilot que usamos *clases* y *repositorios* o el estandar establecido.
 
 ---
 
 ### Demo 2: Generación de unit tests
 
-**Contexto:** Queremos generar tests para el método `getItem()` del MenuService.
+**Contexto:** Queremos generar tests para el método `getAll()` del OrderService.
 
 **Prompt para Copilot (modo Agent):**
 
 ```
-Genera tests unitarios para el método getItem() de MenuService.
-Incluye casos: item existe, item no existe, id inválido.
+Genera tests unitarios para el método getAll() de OrderService.
+Incluye casos: donde el resultado pueda estar vacio o con registros.
 ```
 
 **Sin instrucciones**, Copilot podría generar:
 ```typescript
 // ❌ Mock pesado, sin AAA, nombres en inglés
-jest.mock('./menuRepository');
+jest.mock('./orderService');
 
-describe('MenuService', () => {
+describe('OrderService', () => {
   it('should return item', () => {
-    const mockRepo = { getById: jest.fn().mockReturnValue({ id: '1' }) };
-    const service = new MenuService(mockRepo as any);
-    expect(service.getItem('1')).toBeDefined();
+    const mockRepo = { getAll: jest.fn().mockReturnValue({
+        id: 'order-1',
+        customerName: 'Ronald',
+        lines: [],
+        total: 0,
+        createdAtIso: '2026-01-01T00:00:00.000Z',
+      }) };
+    const service = new OrderService(mockRepo as any);
+    expect(service.getAll()).toBeDefined();
   });
 });
 ```
@@ -342,28 +348,25 @@ describe('MenuService', () => {
 **Con instrucciones**, Copilot genera:
 ```typescript
 // ✅ Repositorio in-memory, patrón AAA, table-driven
+import { OrderService } from './orderService';
 import { MenuService } from './menuService';
-import { InMemoryMenuRepository } from './menuRepository';
+import { InMemoryOrderRepository } from './repositories/orderRepository';
+import { OrderService } from './orderService';
+import type { Clock } from '../shared/clock';
+import type { Order } from './orderTypes';
 
-describe('MenuService', () => {
+describe('OrderService', () => {
   describe('getItem', () => {
-    test.each([
-      { id: 'burger-01', expected: true, description: 'retorna item cuando existe' },
-      { id: 'invalid-99', expected: false, description: 'retorna undefined cuando no existe' },
-    ])('$description', ({ id, expected }) => {
-      // Arrange
-      const repo = new InMemoryMenuRepository();
-      const service = new MenuService(repo);
-      
-      // Act
-      const result = service.getItem(id);
-      
-      // Assert
-      if (expected) {
-        expect(result).toBeDefined();
-      } else {
-        expect(result).toBeUndefined();
-      }
+    test('returns an empty list when there are no orders', () => {
+      const menuService = new MenuService(new InMemoryMenuRepository(SAMPLE_MENU));
+      const repo = new InMemoryOrderRepository();
+      const clock = new FixedClock('2026-01-01T00:00:00.000Z');
+      const svc = new OrderService(menuService, repo, clock);
+
+      const result = svc.getAll();
+
+      expect(result.status).toBe(200);
+      expect(result.body).toEqual([]);
     });
   });
 });
