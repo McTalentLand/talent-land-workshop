@@ -1,0 +1,21 @@
+name: project-standards
+language: TypeScript
+
+typescript:
+  strict: true
+
+api:
+  conventions:
+    contentType: application/json
+    errorShape:
+      error:
+        code: string
+        message: string
+
+testing:
+  framework: jest
+  patterns:
+    - AAA
+    - table-driven
+  guidance:
+    - Prefer fakes/in-memory repositories
