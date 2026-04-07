@@ -8,15 +8,20 @@
 ## McDonald's Global Technology
 
 Que hacemos en el Hub Tecnológico Global en Mexico?
-- Desarrollamos nuevos feature con alcance Global
+- Desarrollamos nuevos feature para los principales mercados de McDonald's.\
+  - US, CA, AU, UK, DE, PT
 - Utilizamos diferentes tecnologías:
-  - C#, TypeScript, React, C++ entre otros.
-- Nuestro desarrollo soporta 69 millones de clientes al día en todo el mundo.  
+  - Aplicaciones de escritorio, mobile, webservices, etc
+  - C#, TypeScript, React, C++, Java entre otros  
+- Nuestro desarrollo da servicio a:
+  - 69 millones de clientes al día. 
+  - 40 mil restaurantes
+  - 2 Millones de personas trabajando en los restaurantes
 
 ## Pre requisitos
 - Tener una cuenta de Github Copilot 
 - Descargar el repositorio 
-![Alt text](C:\Repos\TalentLandWorkshop\TalentLandWorkshop\repo_qr_code.png)
+  - https://github.com/McTalentLand/talent-land-workshop/tree/main
 - Visual Studio Code
 - Node Js (latest)
 - Github Copilot Extension
@@ -191,7 +196,7 @@ description: "Reglas para archivos de pruebas unitarias"
 
 
 
-## SECCIÓN 4: Dos niveles de instrucciones (Esto quizas se pueda quitar)
+## SECCIÓN 4: Dos niveles de instrucciones
 
 ### Nivel 1: Personal (solo tú)
 
@@ -399,6 +404,7 @@ describe('OrderService', () => {
 - **No son mágicas:** Instrucciones vagas = resultados inconsistentes
 - **Contexto limitado:** Demasiadas instrucciones = algunas se ignoran
 - **Conflictos:** Instrucciones contradictorias = comportamiento impredecible
+- **Experimenten:** Prueben con distintos modelos, distintas reglas
 
 ---
 
